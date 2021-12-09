@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="main">
+        <div style=" background-color: #adadad;">
+            <h1 style="font-size: 20px;">BODY MASS INDEX CALULATOR</h1><hr>
+        </div>
+        <div id="inputs">
+            <form>
+                <input id="height" oninput="getHeightValue()" placeholder="Height in meter">
+                <br>
+                <br>
+                <input id="weight" oninput="getWeightValue()" placeholder="Weight in Kilogram"><hr>
+            </form>
+            <button>calculate</button>
+            <br>
+            <br>
+        </div>
+        <div id="result">
+            BMI:
+            <div id="BMI">
+                0
+            </div>
+        </div>
+    </div>
+    <script src="bmi.js"></script>
+
+</body>
+</html>
