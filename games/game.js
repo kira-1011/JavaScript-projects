@@ -2,22 +2,49 @@ var canvas = document.getElementById('canvas');
 var cx = canvas.getContext('2d');
 var posX = 10;
 var posY = 10;
-function drawBox()
+var sizeX = 50;
+var sizeY = 50;
+
+cx.fillRect(posX,posY,sizeX,sizeY);
+document.addEventListener('keypress',function(e)
 {
-    cx.strokeRect(posX,posY,100,100);
-
-    if(posX >= 500)
+    if(e.key.toLowerCase() == 'w')
     {
-        posX = 10;
-        posY += 100;
+        posY -= sizeY;
     }
-    else
+    else if(e.key.toLowerCase() == 's')
     {
-        posX += 100;
-    }  
-}
+        posY += sizeY;
+    }
+    else if(e.key.toLowerCase() == 'd')
+    {
+        posX += sizeX;
+    }
+    else if(e.key.toLowerCase() == 'a')
+    {
+        posX -= sizeX;
+    }
+    cx.fillRect(posX,posY,sizeX,sizeY);
+});
 
-// setInterval(drawBox, 500);
+// var posX = 10;
+// var posY = 10;
+// function drawBox()
+// {
+//     cx.strokeRect(posX,posY,100,100);
 
-let btn = document.getElementById('move');
-btn.addEventListener('click',drawBox);
+//     if(posX >= 500)
+//     {
+//         posX = 10;
+//         posY += 100;
+//     }
+//     else
+//     {
+//         posX += 100;
+//     }  
+// }
+
+// // setInterval(drawBox, 500);
+
+// let btn = document.getElementById('move');
+// btn.addEventListener('click',drawBox);
