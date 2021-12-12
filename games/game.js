@@ -1,50 +1,86 @@
 var canvas = document.getElementById('canvas');
 var cx = canvas.getContext('2d');
-var posX = 10;
-var posY = 10;
+var posX = 0;
+var posY = 0;
 var sizeX = 50;
 var sizeY = 50;
+var velocityX = 6;
+var velocityY = 6;
+var border2 = 550;
+var border1  = 0;
+
+moveUp =false;
+moveDown = false;
+moveRight =false;
+moveLeft = false;
+
+// var action = {
+//     moveUp:false,
+//     moveDown:false,
+//     moveRight:false,
+//     moveLeft:false
+// }
 
 cx.fillRect(posX,posY,sizeX,sizeY);
-document.addEventListener('keypress',function(e)
+
+function onPress(e)
 {
+    ///TODO: clear screen after
+    
     if(e.key.toLowerCase() == 'w')
     {
-        posY -= sizeY;
+        moveUp = true;
+        moveDown = false;
+        moveLeft = false;
+        moveRight = false;
     }
     else if(e.key.toLowerCase() == 's')
     {
-        posY += sizeY;
+        moveUp = false;
+        moveDown = true;
+        moveLeft = false;
+        moveRight = false;
+        
     }
     else if(e.key.toLowerCase() == 'd')
     {
-        posX += sizeX;
+        moveUp = false;
+        moveDown = false;
+        moveLeft = false;
+        moveRight = true;
     }
     else if(e.key.toLowerCase() == 'a')
     {
-        posX -= sizeX;
+        moveUp = false;
+        moveDown = false;
+        moveLeft = true;
+        moveRight = false;
+        
     }
     cx.fillRect(posX,posY,sizeX,sizeY);
-});
+    console.log(moveUp,moveDown,moveLeft,moveRight);
+}
 
-// var posX = 10;
-// var posY = 10;
-// function drawBox()
-// {
-//     cx.strokeRect(posX,posY,100,100);
+function move()
+{
+    if(moveUp && posY > border1)
+    {
+        posY -= velocityY;
+    }
+    else if(moveDown  && posY < border2)
+    {
+        posY += velocityY;
+    }
+    else if(moveRight && posX < border2)
+    {
+        posX += velocityX;
+    }
+    else if(moveLeft  && posX > border1)
+    {
+        posX -= velocityX;
+    }
+}
 
-//     if(posX >= 500)
-//     {
-//         posX = 10;
-//         posY += 100;
-//     }
-//     else
-//     {
-//         posX += 100;
-//     }  
-// }
-
-// // setInterval(drawBox, 500);
-
-// let btn = document.getElementById('move');
-// btn.addEventListener('click',drawBox);
+document.addEventListener('keypress',onPress);
+console.log(moveUp,moveDown,moveLeft,moveRight);
+move();
