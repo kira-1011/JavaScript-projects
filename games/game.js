@@ -1,86 +1,153 @@
 var canvas = document.getElementById('canvas');
 var cx = canvas.getContext('2d');
-var posX = 0;
-var posY = 0;
-var sizeX = 50;
-var sizeY = 50;
-var velocityX = 6;
-var velocityY = 6;
-var border2 = 550;
-var border1  = 0;
+var cxScore = canvas.getContext('2d');
+var cxBox = canvas.getContext('2d');
+cxScore.font = "20px Arial";
+cx.fillStyle = "#00ff00";
+canvas.style.background ="#000000";
+var posX = 10;
+var posY = 10;
+var sizeX = 25;
+var sizeY = 25;
+var velocityX = 5;
+var velocityY = 5;
+var borderStart = 0;
+var borderEnd = 570;
+var intervalTime = 25;
+var interval;
+ 
+cxScore.fillText("Score:",450,25);
+cx.fillRect(posX,posY,sizeX,sizeY);
+cxBox.fillRect(100,100,10,10);
 
-moveUp =false;
-moveDown = false;
-moveRight =false;
-moveLeft = false;
-
-// var action = {
-//     moveUp:false,
-//     moveDown:false,
-//     moveRight:false,
-//     moveLeft:false
+// class Fruit
+// {
+//     constructor()
+//     {
+//         var canvas = document.getElementById('canvas');
+        
+//     }
+//     randomlySpawn() 
+//     {
+//         var cxBox = canvas.getContext('2d');
+//         var x = Math.random() * 10;
+//         var y = Math.random() * 10;
+//         cxBox.fillRect(x,y,10,10);
+        
+//     }
 // }
 
-cx.fillRect(posX,posY,sizeX,sizeY);
+
+function randomlySpawn() 
+{
+    var x = Math.random() * 600;
+    var y = Math.random() * 600;
+    cxBox.fillRect(x,y,10,10);
+    
+}
+
+function isEaten()
+{
+    if(posX == x)
+    {
+        return true;
+    }
+    
+}
+
+function draw()
+{
+    cx.clearRect(0,0,canvas.width,canvas.height);
+    cx.fillRect(posX,posY,sizeX,sizeY);
+    cxScore.fillText("Score:",450,25);
+
+}
+function move(key)
+{
+    clearInterval(interval);
+
+    if(key.toLowerCase() === 'd')
+    {
+        interval = setInterval(function(){
+        if(gameOver(posX))
+        {
+            cx.fillText("Game Over!!!", 200, 300);
+        }
+        else
+        {
+            posX += velocityX;
+            draw();
+        }
+            
+        },intervalTime);
+       
+    }
+    else if(key.toLowerCase() === 'a')
+    {
+        interval = setInterval(function(){
+        if(gameOver(posX))
+        {
+            cx.fillText("Game Over!!!", 200, 300);
+        }
+        else
+        {
+            posX -= velocityX;
+            draw();
+        }
+        },intervalTime);
+        
+    }
+    else if(key.toLowerCase() === 'w')
+    {
+        interval = setInterval(function(){
+            if(gameOver(posY))
+            {
+                cx.fillText("Game Over!!!", 200, 300);
+            }
+            else
+            {
+                posY -= velocityY;
+                draw();
+            }
+            
+        },intervalTime);
+       
+    }
+    else if(key.toLowerCase() === 's')
+    {
+        interval = setInterval(function(){
+            if(gameOver(posY))
+            {
+                cx.fillText("Game Over!!!", 200, 300);
+            }
+            else
+            {
+                posY += velocityY;
+                draw();
+            }
+            
+        },intervalTime);
+    }
+    else 
+    {
+        draw();
+    }
+ 
+}
 
 function onPress(e)
 {
-    ///TODO: clear screen after
-    
-    if(e.key.toLowerCase() == 'w')
-    {
-        moveUp = true;
-        moveDown = false;
-        moveLeft = false;
-        moveRight = false;
-    }
-    else if(e.key.toLowerCase() == 's')
-    {
-        moveUp = false;
-        moveDown = true;
-        moveLeft = false;
-        moveRight = false;
-        
-    }
-    else if(e.key.toLowerCase() == 'd')
-    {
-        moveUp = false;
-        moveDown = false;
-        moveLeft = false;
-        moveRight = true;
-    }
-    else if(e.key.toLowerCase() == 'a')
-    {
-        moveUp = false;
-        moveDown = false;
-        moveLeft = true;
-        moveRight = false;
-        
-    }
-    cx.fillRect(posX,posY,sizeX,sizeY);
-    console.log(moveUp,moveDown,moveLeft,moveRight);
+   move(e.key);
 }
 
-function move()
+function gameOver(position)
 {
-    if(moveUp && posY > border1)
+
+    if(position <= borderStart || position >= borderEnd)
     {
-        posY -= velocityY;
-    }
-    else if(moveDown  && posY < border2)
-    {
-        posY += velocityY;
-    }
-    else if(moveRight && posX < border2)
-    {
-        posX += velocityX;
-    }
-    else if(moveLeft  && posX > border1)
-    {
-        posX -= velocityX;
+        cx.font = "40px Arial";
+        cx.fillStyle = "red";
+        return true;   
     }
 }
-
 document.addEventListener('keypress',onPress);
-console.log(moveUp,moveDown,moveLeft,moveRight);
-move();
